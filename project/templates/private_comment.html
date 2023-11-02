@@ -1,0 +1,38 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Private Comment
+{% endblock title %}
+
+{% block content %}
+
+<h1>Private Comment</h1>
+<h3>{{ time_now|date:'M d Y' }}</h3>
+<br>
+
+<form method="get">
+    <select name="post">
+        <option value="">All Posts</option>
+        {% for post in user_posts %}
+            <option value="{{ post.pk }}"  {% if selected_post_id == post.pk %}selected{% endif %}>{{ post.header }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+</form>
+
+{% if comments %}
+    {% for comment in comments %}
+        <p>
+            <b>comment to: {{ comment.post.header }}</b>
+            <br>
+            {{ Comment.text | safe }}
+            <br>
+        </p>
+    {% endfor %}
+{% else %}
+   <h2>No comments available!</h2>
+{% endif %}
+
+</form>
+
+{% endblock content %}
